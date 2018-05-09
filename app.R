@@ -36,6 +36,29 @@ ui <- dashboardPage(
 #Shiny server #######################################################
 
 server <- function(input, output) {
+  flow.df <- eventReactive(input$date_input, {
+    website <- "https://nwis.waterdata.usgs.gov/usa/nwis/uv/"
+    parameter <- "00060"
+    site_number <- "01591000"
+    ini_start_month <- ceiling_date(input$date_input - years(1), "month")
+    start_date <- as.character(ini_start_month)
+    end_date <- as.character(input$date_input)
+    #link <-"https://nwis.waterdata.usgs.gov/usa/nwis/uv/?cb_00060=on&format=rdb&site_no=01591000&period=&begin_date=2007-04-01&end_date=2008-03-25"
+    link <- paste(website, 
+                  "?cb_",
+                  parameter,
+                  "=on&format=rdb&site_no=",
+                  site_number,
+                  "&period=&begin_date=",
+                  start_date,
+                  "&end_date=",
+                  end_date,
+                  sep="")
+    print("Downloading flow data")
+    X <- read.csv(url(link), skip = 31, sep = "\t")
+    colnames(X) <- c("agency","site_number", "datetime", "tz_cd", "discharge", "status_cd")
+    return(X)
+  })
   output$plot1 <- renderPlot({
     
     
@@ -56,25 +79,25 @@ server <- function(input, output) {
     df_sim_months$end_months <- ceiling_date(df_sim_months$sim_months, "month") - days(1)
     
     #########################################################################################
-    website <- "https://nwis.waterdata.usgs.gov/usa/nwis/uv/"
-    parameter <- "00060"
-    site_number <- "01591000"
-    start_date <- as.character(ini_start_month)
-    end_date <- as.character(today_is)
-    #link <-"https://nwis.waterdata.usgs.gov/usa/nwis/uv/?cb_00060=on&format=rdb&site_no=01591000&period=&begin_date=2007-04-01&end_date=2008-03-25"
-    link <- paste(website, 
-                  "?cb_",
-                  parameter,
-                  "=on&format=rdb&site_no=",
-                  site_number,
-                  "&period=&begin_date=",
-                  start_date,
-                  "&end_date=",
-                  end_date,
-                  sep="")
-    print("Downloading flow data")
-    X <- read.csv(url(link), skip = 31, sep = "\t")
-    colnames(X) <- c("agency","site_number", "datetime", "tz_cd", "discharge", "status_cd")
+    # website <- "https://nwis.waterdata.usgs.gov/usa/nwis/uv/"
+    # parameter <- "00060"
+    # site_number <- "01591000"
+    # start_date <- as.character(ini_start_month)
+    # end_date <- as.character(today_is)
+    # #link <-"https://nwis.waterdata.usgs.gov/usa/nwis/uv/?cb_00060=on&format=rdb&site_no=01591000&period=&begin_date=2007-04-01&end_date=2008-03-25"
+    # link <- paste(website, 
+    #               "?cb_",
+    #               parameter,
+    #               "=on&format=rdb&site_no=",
+    #               site_number,
+    #               "&period=&begin_date=",
+    #               start_date,
+    #               "&end_date=",
+    #               end_date,
+    #               sep="")
+    # print("Downloading flow data")
+    # X <- read.csv(url(link), skip = 31, sep = "\t")
+    # colnames(X) <- c("agency","site_number", "datetime", "tz_cd", "discharge", "status_cd")
     #data.df <- X  %>% 
     # dplyr::mutate (datetime = as.POSIXct(datetime, format = "%Y-%m-%dT%H:%M"))
     #########################################################################################
@@ -83,7 +106,7 @@ server <- function(input, output) {
     
     #########################################################################################
     
-    data.df <- X %>%
+    data.df <- flow.df() %>%
       dplyr::mutate (discharge = as.numeric(as.character(discharge))) %>%
       mutate(datetime = as.POSIXct(as.character(datetime), tz = "EST")) %>%
       #mutate(datetime = strptime(as.character(datetime), "%Y-%m-%d %H:%M:%S")) %>%
