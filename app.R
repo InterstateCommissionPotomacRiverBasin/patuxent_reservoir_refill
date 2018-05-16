@@ -226,12 +226,12 @@ server <- function(input, output) {
     polygon(c(1:12,12:1),c(rep(dead_storage,12),rep(capacity,12)),col="lightblue",border=NA)
     
     #polygon(c(1:12,12:1),c(rep(capacity,12),rep(11,12)),col="grey",border=NA)
-    polygon(c(1:12,12:1),c(percentile.df[1,],rev(percentile.df[2,])),col="pink",border=NA)
+    polygon(c(1:12,12:1),c(percentile.df[1,],rev(percentile.df[2,])),col="indianred1",border=NA)
     polygon(c(1:12,12:1),c(percentile.df[2,],rev(percentile.df[3,])),col="lightpink",border=NA)
-    polygon(c(1:12,12:1),c(percentile.df[3,],rev(percentile.df[4,])),col="lightsalmon",border=NA)
+    polygon(c(1:12,12:1),c(percentile.df[3,],rev(percentile.df[4,])),col="rosybrown1",border=NA)
     polygon(c(1:12,12:1),c(percentile.df[4,],rev(percentile.df[5,])),col="moccasin",border=NA)
-    polygon(c(1:12,12:1),c(percentile.df[5,],rev(percentile.df[6,])),col="springgreen",border=NA)
-    polygon(c(1:12,12:1),c(percentile.df[6,],rev(percentile.df[7,])),col="seagreen1",border=NA)
+    polygon(c(1:12,12:1),c(percentile.df[5,],rev(percentile.df[6,])),col="lightgreen",border=NA)
+    polygon(c(1:12,12:1),c(percentile.df[6,],rev(percentile.df[7,])),col="seagreen3",border=NA)
     
     #polygon(c(1:12,12:1),c(percentile.df[1,],rev(percentile.df[3,])),col="skyblue",border=NA)
     lines(1:12,(c(rep(capacity*0.9,12))),lty=2,lwd=1, cex=1.2, col="black")
