@@ -1,4 +1,4 @@
-output$plotly1 <- renderPlotly({
+output$plotly2 <- renderPlotly({
 
 # define ------------------------------------------------------------------
   percentile.df <- percentile.rec()
