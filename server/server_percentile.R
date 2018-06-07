@@ -9,7 +9,14 @@ percentile.rec <- reactive({
   #dead_storage <- 0.43
   dead_storage <- input$dead_storage
   #withdrawal <- 15
-  withdrawal <- input$withdrawal_slider
+  #withdrawal <- input$withdrawal_slider
+  
+  withdrawal <- mean(c(input$w1,input$w2,input$w3,
+                     input$w4,input$w5,input$w6,
+                     input$w7,input$w8,input$w9,
+                     input$w10,input$w11,input$w12))
+  print (withdrawal)
+  #print (input$w12)
   
   storage.df <- start_storage + 
     (fmgd.df / 1000) -

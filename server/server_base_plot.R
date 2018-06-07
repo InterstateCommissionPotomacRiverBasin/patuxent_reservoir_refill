@@ -107,3 +107,4 @@ output$base_plot <- renderPlot({
   #text(2.6, 0.5, "Emergency storage")
   text(2.5, 8.9, "90% full")
 })
+

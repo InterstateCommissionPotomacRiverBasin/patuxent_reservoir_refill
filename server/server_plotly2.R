@@ -13,7 +13,7 @@ output$plotly2 <- renderPlotly({
            percentile = paste0("pct_", str_extract(percentile, '[0-9]+'))) %>% 
     gather(Month, Storage, -percentile) %>% 
     mutate(Month = factor(Month, levels = month.abb[monthly.rec()$month]))
-  
+ 
   
   rect.df <- percentile.df %>% 
     spread(percentile, Storage)

@@ -18,6 +18,7 @@ flow.rec <- eventReactive(input$today_is, {
                 sep="")
   print("Downloading flow data")
   pull.df <- read.csv(url(link), skip = 31, sep = "\t")
+  write.csv(pull.df,'pull_df.csv')
   colnames(pull.df) <- c("agency","site_number", "datetime",
                          "tz_cd", "discharge", "status_cd")
   
