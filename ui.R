@@ -79,8 +79,9 @@ ui <- dashboardPage(
     tabItem(tabName = "widgets",
             h2("Based on historic data"),
             fluidRow(
-              #box(plotOutput("base_plot", height = 500), width = 9),
-              box(plotlyOutput("plotly2", height = 500) %>% withSpinner(type = 6), width = 12)
+              #box(plotOutput("base_plot", height = 500), width = 9)
+              #box(plotlyOutput("plotly2", height = 500) %>% withSpinner(type = 6), width = 12)
+              box(plotOutput("plot1", height = 500), width = 9)
             )),
     
     tabItem(tabName = "controls",
